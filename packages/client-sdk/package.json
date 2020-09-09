@@ -1,0 +1,17 @@
+{
+  "name": "@libra/client-sdk",
+  "version": "0.0.1",
+  "author": "michaelzhao",
+  "description": "client sdk for libra",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "makeapi": "grpc_tools_node_protoc -I../../../libra-api --js_out=import_style=commonjs:api --grpc-web_out=import_style=commonjs,mode=grpcwebtext:api ../../../libra-api/{acct,dbapi,gwapi,ptapi,sdk}/v1/*.proto ../../../libra-api/google/api/{http,annotations}.proto"
+  },
+  "dependencies": {
+    "grpc-web": "^1.2.1"
+  },
+  "devDependencies": {
+    "grpc-tools": "^1.9.1"
+  }
+}
