@@ -1,2 +1,2 @@
-# libra-node
+# libra-js
 libra sdk for javascript
