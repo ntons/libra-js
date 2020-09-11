@@ -6,12 +6,28 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "makeapi": "grpc_tools_node_protoc -I../../../libra-api --js_out=import_style=commonjs:api --grpc-web_out=import_style=commonjs,mode=grpcwebtext:api ../../../libra-api/{acct,dbapi,gwapi,ptapi,sdk}/v1/*.proto ../../../libra-api/google/api/{http,annotations}.proto"
+    "generate-api-js": "grpc_tools_node_protoc -I../../libra-api --js_out=import_style=commonjs:src/api --grpc-web_out=import_style=commonjs+dts,mode=grpcwebtext:src/api ../../libra-api/{acct,dbapi,gwapi,ptapi,sdk}/v1/*.proto ../../libra-api/google/api/{http,annotations}.proto",
+    "generate-api-ts": "protoc --plugin=protoc-gen-ts=node_modules/.bin/protoc-gen-ts --ts_out=src/api -I../../libra-api ../../libra-api/{acct,dbapi,gwapi,ptapi,sdk}/v1/*.proto ../../libra-api/google/api/{http,annotations}.proto",
+    "clear-api": "rm -rf src/api && mkdir -p src/api",
+    "generate-api": "npm run clear-api && npm run generate-api-js && npm run generate-api-ts",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
   },
   "dependencies": {
+    "grpc": "^1.24.3",
     "grpc-web": "^1.2.1"
   },
   "devDependencies": {
-    "grpc-tools": "^1.9.1"
+    "@types/google-protobuf": "^3.7.3",
+    "@types/node": "^13.11.1",
+    "grpc-tools": "^1.9.1",
+    "grpc_tools_node_protoc_ts": "^4.1.4",
+    "gts": "^2.0.2",
+    "typescript": "^3.8.3"
   }
 }
